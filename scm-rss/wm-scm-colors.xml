@@ -11,7 +11,7 @@
     <item>
       <title>wm-scm-colors</title>
       <pubDate>FMon, 31 Dec 2018 12:00:46 +0000</pubDate>
-      <enclosure url="https://sketch.cloud/s/WEoDy" type="application/octet-stream" sparkle:version="1"/>
+      <enclosure url="sketch://add-library?url=https%3A%2F%2Fsketch.cloud%2Fs%2FWEoDy" type="application/octet-stream" sparkle:version="1"/>
     </item>
   </channel>
 </rss>
