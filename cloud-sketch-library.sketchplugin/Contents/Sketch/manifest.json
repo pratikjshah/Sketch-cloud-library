@@ -1,0 +1,84 @@
+{
+  "name": "☁️ Sketch Cloud Library",
+  "description": "Simplest way to manage your Design System from Cloud :)",
+  "icon": "sketch-design-system-in-cloud.png",
+  "author": "Pratik Shah",
+  "email": "hello@pratikshah.website",
+  "appcast": "https://raw.githubusercontent.com/pratikjshah/walmart-design-system/master/appcast.xml",
+  "updateURL": "https://github.com/pratikjshah/walmart-design-system/archive/master.zip",
+  "downloadURL": "https://github.com/pratikjshah/walmart-design-system/archive/master.zip",
+  "homepage": "http://sketch-cloud-library.pratikshah.website/",
+  "version": "1.0.1",
+  "identifier": "website.pratikshah.sketch-cloud-library",
+  "compatibleVersion": "52",
+  "bundleVersion": "1",
+  "commands": [
+    {
+      "script": "handler.js",
+      "handler": "addGDPLibrary",
+      "shortcut": "",
+      "name": "Add GDP Library",
+      "identifier": "addGDPLibrary",
+      "icon": ""
+    },
+    {
+      "script": "handler.js",
+      "handler": "openGDPTemplate",
+      "shortcut": "",
+      "name": "Open GDP Template",
+      "identifier": "openGDPTemplate",
+      "icon": ""
+    },
+    {
+      "script": "handler.js",
+      "handler": "addSCMLibrary",
+      "shortcut": "",
+      "name": "Add SCM Library",
+      "identifier": "addSCMLibrary",
+      "icon": ""
+    },
+    {
+      "script": "handler.js",
+      "handler": "checkLibraryUpdates",
+      "shortcut": "",
+      "name": "Check Library Updates",
+      "identifier": "checkLibraryUpdates",
+      "icon": ""
+    },
+    {
+      "script": "handler.js",
+      "handler": "reportIssue",
+      "shortcut": "",
+      "name": "Report issue",
+      "identifier": "reportIssue"
+    },
+    {
+      "script": "handler.js",
+      "handler": "checkForUpdate",
+      "shortcut": "",
+      "name": "Check for Plugin update",
+      "identifier": "checkForUpdate"
+    },
+    {
+      "script": "handler.js",
+      "handler": "aboutPratikShah",
+      "shortcut": "",
+      "name": "About Pratik Shah",
+      "identifier": "aboutPratikShah"
+    }
+  ],
+  "menu": {
+    "title": "☁️ Sketch Cloud Library",
+    "items": [
+      "addGDPLibrary",
+      "openGDPTemplate",
+      "-",
+      "checkLibraryUpdates",
+      "-",
+      "reportIssue",
+      "-",
+      "aboutPratikShah"
+    ]
+  },
+  "disableCocoaScriptPreprocessor": true
+}
