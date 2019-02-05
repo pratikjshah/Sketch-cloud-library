@@ -34,10 +34,8 @@ A Plugin that lets you share and collaborate your Design System with others, it 
 Simply follow these 3 steps:
 
 1. Install [Symbol organizer](https://github.com/sonburn/symbol-organizer) and [Symbol swapper](https://github.com/sonburn/symbol-swapper)
-2. Run **Symbol organizer** to arrange your current symbols and remove unused ones!
-<img src="https://raw.githubusercontent.com/pratikjshah/walmart-design-system/master/recordings/symbol-organizer.gif" />
-3. Run **Symbol Swaper** to replace your local symbols with cloud library.
-<img src="https://raw.githubusercontent.com/pratikjshah/walmart-design-system/master/recordings/sysmbol-swapper.gif" />
+2. Run **Symbol organizer** to arrange your current symbols and remove unused ones! <img src="https://raw.githubusercontent.com/pratikjshah/walmart-design-system/master/recordings/symbol-organizer.gif" />
+3. Run **Symbol Swaper** to replace your local symbols with cloud library. <img src="https://raw.githubusercontent.com/pratikjshah/walmart-design-system/master/recordings/sysmbol-swapper.gif" />
 
 That's all! You are now using common cloud library.
 
