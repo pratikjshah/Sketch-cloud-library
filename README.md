@@ -1,7 +1,6 @@
 <div align="center">
   <img width="120px" src="https://raw.githubusercontent.com/pratikjshah/walmart-design-system/master/cloud-sketch-library.sketchplugin/Contents/Resources/icon.png" />
 </div>
-
 <h1 align="center">☁️ Sketch Cloud Library</h1>
 <div align="center">
   <strong>Simplest way to manage your Design System from Cloud :)</strong>
@@ -11,16 +10,9 @@
 
 ## Installation
 
-### From a release (simplest)
-
 - [⬇️Download](https://github.com/pratikjshah/walmart-design-system/archive/master.zip) the latest release of the plugin
 - Un-zip
-- Double-click on the sketch plugin
-
-### From the sources
-
-- Clone the repo
-- Install the dependencies (`npm install`)
+- Double-click on the `cloud-sketch-library.sketchplugin`
 
 ## Usage
 
