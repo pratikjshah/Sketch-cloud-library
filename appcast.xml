@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel>
+        <title>📐 Sketch Guides</title>
+        <link>https://github.com/pratikjshah/PS-Guides/appcast.xml</link>
+        <description>Solution for your guides problems in Sketch :)</description>
+        <language>en</language>
+
+        <item>
+            <title>v1.0.1</title>
+            <description>
+                <![CDATA[
+                  <h2>Initial Build</h2>
+                ]]>
+            </description>
+            <pubDate>Thu, 27 Dec 2018 21:54:24 GMT</pubDate>
+            <enclosure
+                url="https://github.com/pratikjshah/walmart-design-system/archive/master.zip"
+                sparkle:version="1.0.1"
+                type="application/octet-stream"/>
+        </item>
+    </channel>
+</rss>
