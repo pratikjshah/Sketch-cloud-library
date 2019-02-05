@@ -10,9 +10,9 @@
 
 A Plugin that lets you share and collaborate your Design System with others, it includes:
 
-* Sketch Library (stored on a cloud)
-* Document Colors, Text Styles and Layer styles
-* Quick starter templates
+☁️Sketch Library (stored on a cloud) <br/>
+🌈Document Colors, Text Styles and Layer styles <br/>
+🚀Quick starter templates <br/>
 
 > PS: I am still working on the plugin, so to onboard new Design System please reach out to me.
 
