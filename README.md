@@ -26,8 +26,7 @@ A Plugin that lets you share and collaborate your Design System with others, it 
 
 * Provides central place for all your design system components.
 * Makes collaboration effortless
-* Reduces Sketch file size
-<img src="https://github.com/pratikjshah/walmart-design-system/blob/master/recordings/why-use.png?raw=true" />
+* Reduces Sketch file size <img src="https://github.com/pratikjshah/walmart-design-system/blob/master/recordings/why-use.png?raw=true" />
 
 ## How to use "Cloud Libraries" with your current Sketch file?
 
