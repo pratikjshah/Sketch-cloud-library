@@ -411,6 +411,100 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/@skpm/timers/index.js":
+/*!********************************************!*\
+  !*** ./node_modules/@skpm/timers/index.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var timeout = __webpack_require__(/*! ./timeout */ "./node_modules/@skpm/timers/timeout.js")
+var interval = __webpack_require__(/*! ./interval */ "./node_modules/@skpm/timers/interval.js")
+var immediate = __webpack_require__(/*! ./immediate */ "./node_modules/@skpm/timers/immediate.js")
+
+module.exports = {
+  setTimeout: timeout.setTimeout,
+  clearTimeout: timeout.clearTimeout,
+  setImmediate: immediate.setImmediate,
+  clearImmediate: immediate.clearImmediate,
+  setInterval: interval.setInterval,
+  clearInterval: interval.clearInterval
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/@skpm/timers/interval.js":
+/*!***********************************************!*\
+  !*** ./node_modules/@skpm/timers/interval.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* globals coscript, sketch */
+var fiberAvailable = __webpack_require__(/*! ./test-if-fiber */ "./node_modules/@skpm/timers/test-if-fiber.js")
+
+var setInterval
+var clearInterval
+
+var fibers = []
+
+if (fiberAvailable()) {
+  setInterval = function (func, delay, param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) {
+    // fibers takes care of keeping coscript around
+    var id = fibers.length
+    fibers.push(coscript.scheduleWithRepeatingInterval_jsFunction(
+      (delay || 0) / 1000,
+      function () {
+        func(param1, param2, param3, param4, param5, param6, param7, param8, param9, param10)
+      }
+    ))
+    return id
+  }
+
+  clearInterval = function (id) {
+    var interval = fibers[id]
+    if (interval) {
+      interval.cancel() // fibers takes care of keeping coscript around
+      fibers[id] = undefined // garbage collect the fiber
+    }
+  }
+} else {
+  setInterval = function (func, delay, param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) {
+    coscript.shouldKeepAround = true
+    var id = fibers.length
+    fibers.push(true)
+    function trigger () {
+      coscript.scheduleWithInterval_jsFunction(
+        (delay || 0) / 1000,
+        function () {
+          if (fibers[id]) { // if not cleared
+            func(param1, param2, param3, param4, param5, param6, param7, param8, param9, param10)
+            trigger()
+          }
+        }
+      )
+    }
+    trigger()
+    return id
+  }
+
+  clearInterval = function (id) {
+    fibers[id] = false
+    if (fibers.every(function (_id) { return !_id })) { // if everything is cleared
+      coscript.shouldKeepAround = false
+    }
+  }
+}
+
+module.exports = {
+  setInterval: setInterval,
+  clearInterval: clearInterval
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/@skpm/timers/test-if-fiber.js":
 /*!****************************************************!*\
   !*** ./node_modules/@skpm/timers/test-if-fiber.js ***!
@@ -1179,7 +1273,7 @@ module.exports = fetch
 /*!************************!*\
   !*** ./src/handler.js ***!
   \************************/
-/*! exports provided: addGDPLibrary, addSCMLibrary, openGDPTemplate, checkLibraryUpdates, setupLibrary, addOrEnableLibrary, addNewLibrary, enableLibraryIfAlreadyAdded, loadPalette, setupTemplate, reportIssue, aboutPratikShah, checkForUpdate, init, showMsg, openUrlInBrowser, readJSON, saveLocalData, readLocalData, readRemoteData, tryParseJSON, networkRequest, logResult, logError, validateResponse, readResponseAsJSON, trackEvent */
+/*! exports provided: addGDPLibrary, addSCMLibrary, openGDPTemplate, checkLibraryUpdates, checkForUpdate, setupLibrary, addOrEnableLibrary, addNewLibrary, enableLibraryIfAlreadyAdded, addPalette, loadPalette, setupTemplate, reportIssue, aboutPratikShah, manageDailyUpdateCheck, manageManualUpdate, manageUpdate, init, showMsg, openUrlInBrowser, saveLocalData, readLocalData, networkRequest, trackEvent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1188,39 +1282,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addSCMLibrary", function() { return addSCMLibrary; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "openGDPTemplate", function() { return openGDPTemplate; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checkLibraryUpdates", function() { return checkLibraryUpdates; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checkForUpdate", function() { return checkForUpdate; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setupLibrary", function() { return setupLibrary; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addOrEnableLibrary", function() { return addOrEnableLibrary; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addNewLibrary", function() { return addNewLibrary; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "enableLibraryIfAlreadyAdded", function() { return enableLibraryIfAlreadyAdded; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addPalette", function() { return addPalette; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loadPalette", function() { return loadPalette; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setupTemplate", function() { return setupTemplate; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "reportIssue", function() { return reportIssue; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "aboutPratikShah", function() { return aboutPratikShah; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checkForUpdate", function() { return checkForUpdate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "manageDailyUpdateCheck", function() { return manageDailyUpdateCheck; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "manageManualUpdate", function() { return manageManualUpdate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "manageUpdate", function() { return manageUpdate; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "init", function() { return init; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "showMsg", function() { return showMsg; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "openUrlInBrowser", function() { return openUrlInBrowser; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "readJSON", function() { return readJSON; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveLocalData", function() { return saveLocalData; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "readLocalData", function() { return readLocalData; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "readRemoteData", function() { return readRemoteData; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "tryParseJSON", function() { return tryParseJSON; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "networkRequest", function() { return networkRequest; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logResult", function() { return logResult; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logError", function() { return logError; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "validateResponse", function() { return validateResponse; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "readResponseAsJSON", function() { return readResponseAsJSON; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "trackEvent", function() { return trackEvent; });
 /* harmony import */ var sketch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sketch */ "sketch");
 /* harmony import */ var sketch__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sketch__WEBPACK_IMPORTED_MODULE_0__);
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 
 var globalContext;
-var remoteManifestUrl = "https://raw.githubusercontent.com/pratikjshah/PS-Guides/master/PS%20Guides.sketchplugin/Contents/Sketch/manifest.json";
+var remoteManifestUrl = "https://raw.githubusercontent.com/pratikjshah/sketch-cloud-library/master/cloud-sketch-library.sketchplugin/Contents/Sketch/manifest.json";
 var localDataPath;
 var userConfig;
-var pluginRoot; // ===== Menu action handlers ========================
+var pluginRoot;
+var hasResponseCame = false;
+
+var timeout = __webpack_require__(/*! @skpm/timers */ "./node_modules/@skpm/timers/index.js"); // ===== Menu action handlers ========================
+
 
 function addGDPLibrary(context) {
   init(context);
@@ -1233,21 +1326,30 @@ function addSCMLibrary(context) {
 function openGDPTemplate(context) {
   init(context);
   var template = userConfig['gdp'].templates[0].fileName;
-  var localTemplatePath = pluginRoot + "/Contents/Resources/templates/" + template;
+  var localTemplatePath = pluginRoot + "/Contents/Resources/templates/" + template; //localTemplatePath = NSURL.URLWithString("https://sketch.cloud/s/dDxam");
+
   NSApp.delegate().openTemplateAtPath(localTemplatePath);
+  trackEvent("openTemplate", "gdp", 1);
 }
 function checkLibraryUpdates(context) {
   init(context);
   AppController.sharedInstance().checkForAssetLibraryUpdates();
+  trackEvent("checkLibraryUpdates", "manualCheckForUpdate", 1);
+}
+function checkForUpdate(context) {
+  init(context);
+  networkRequest(remoteManifestUrl, manageManualUpdate);
+  trackEvent("checkForUpdate", "manualCheckForUpdate", 1); //context.document.showMessage("remoteManifest: " + remoteManifest.version);
 } // ===== Library functions ========================= 
 
 function setupLibrary(tag) {
-  //showMsg("into the setup library: " + tag);
+  trackEvent("addLibrary", tag, 1); //showMsg("into the setup library: " + tag);
+
   if (userConfig.hasOwnProperty(tag)) {
     var tagObject = userConfig[tag];
     addOrEnableLibrary(tagObject.libraries); //setupTemplate(tagObject.templates);
 
-    loadPalette(tagObject.colors);
+    addPalette(tagObject.colors);
   } else {
     showMsg("🤬Something went wrong! Please report the issue.");
   } //documentColors = readJSON(false, );
@@ -1269,8 +1371,10 @@ function addOrEnableLibrary(librariesToAdd) {
   for (var i = 0; i < librariesToAdd.length; i++) {
     if (enableLibraryIfAlreadyAdded(librariesToAdd[i].fileName)) {
       showMsg("🤘Yo🤘 " + librariesToAdd[i].displayName + " is already added!");
+      trackEvent("addLibrary", "enabledAddedLibrary", 1);
     } else {
       addNewLibrary(librariesToAdd[i].url);
+      trackEvent("addLibrary", "addNewLibrary", 1);
       showMsg("⬇️ Downloading " + librariesToAdd[i].displayName + " ..");
     }
   }
@@ -1297,11 +1401,14 @@ function enableLibraryIfAlreadyAdded(name) {
   return false;
 } // ===== Document Colors functions =================
 
+function addPalette(url) {
+  //var palette = readJSON(false, url);
+  var palette = networkRequest(url, loadPalette);
+}
 function loadPalette(palette) {
   var app = NSApp.delegate();
-  var doc = globalContext.document; //var palette = readJSON(false, url);
-
-  var colorPalette = palette ? palette : [];
+  var doc = globalContext.document;
+  var colorPalette = palette.colors ? palette.colors : [];
   var colors = [];
 
   if (colorPalette.length > 0) {
@@ -1310,14 +1417,15 @@ function loadPalette(palette) {
     }
   } else {
     showMsg("No 🌈Colors found! Please report the issue.");
-  }
+  } //var assets = app.globalAssets();
 
-  var assets = app.globalAssets(); //var assets = doc.documentData().assets();
 
+  var assets = doc.documentData().assets();
   assets.setColors([]);
   if (colors.length > 0) assets.addColors(colors);
   doc.inspectorController().closeAnyColorPopover();
   app.refreshCurrentDocument();
+  trackEvent("addLibrary", "loadPalette", 1);
 } // ===== Template functions ========================
 
 function setupTemplate(templatesToAdd) {
@@ -1346,29 +1454,50 @@ function setupTemplate(templatesToAdd) {
 } // ===== Other functions ==========================
 
 function reportIssue(context) {
-  openUrlInBrowser("https://github.com/pratikjshah/walmart-design-system/issues");
+  init(context);
+  openUrlInBrowser("https://github.com/pratikjshah/sketch-cloud-library/issues");
 }
 function aboutPratikShah(context) {
+  init(context);
   openUrlInBrowser("http://pratikshah.website");
 }
-function checkForUpdate(context) {
-  initPlugin(context);
-  var remoteManifest = getRemoteJson(remoteManifestUrl); //context.document.showMessage("remoteManifest: " + remoteManifest.version);
-
-  trackEvent("checkForUpdate", "manualCheckForUpdate", 1);
-
+function manageDailyUpdateCheck(remoteManifest) {
+  var isDailyCheck = true;
+  manageUpdate(remoteManifest, isDailyCheck);
+}
+function manageManualUpdate(remoteManifest) {
+  var isDailyCheck = false;
+  manageUpdate(remoteManifest, isDailyCheck);
+}
+function manageUpdate(remoteManifest, isDailyCheck) {
+  /*if (userConfig.localVersion != remoteManifest.version) {
+  	showMsg(userConfig.name + ": "+ userConfig.localVersion + " is out of date! Please check for updates.");
+  }*/
   if (remoteManifest.version) {
-    if (configData.localVersion == remoteManifest.version) {
-      globalContext.document.showMessage("🤘Yo🤘! PS: Guides " + configData.localVersion + " is currently the newest version available.");
+    if (userConfig.localVersion == remoteManifest.version) {
+      if (!isDailyCheck) {
+        showMsg("🤘Yo🤘! You are using the latest version of " + userConfig.name);
+      } //setUpdateCheckDayOnTomorrow();
+
     } else {
-      //globalContext.document.showMessage("need update:");
-      showAvailableUpdateDialog();
+      showMsg("Hey👋! New version of " + userConfig.name + " is available!"); //showAvailableUpdateDialog();
+
+      setUpdateCheckDayOnTomorrow();
     }
   } else {
-    //globalContext.document.showMessage("can not check:");
-    showAvailableUpdateDialog();
+    //showMsg("can not check:");
+    //showAvailableUpdateDialog();
+    setUpdateCheckDayOnTomorrow();
   }
+}
+
+function setUpdateCheckDayOnTomorrow() {
+  var newTime = new Date();
+  newTime.setDate(newTime.getDate() + 1);
+  userConfig.localUpdateTime = newTime.getTime();
+  saveLocalData(userConfig, localDataPath);
 } // ===== Dialog functions ==========================
+
 
 function showAvailableUpdateDialog() {
   var window = createDownloadWindow();
@@ -1378,7 +1507,7 @@ function showAvailableUpdateDialog() {
 
   if (response == "1000") {
     //globalContext.document.showMessage("Go to download");
-    openUrlInBrowser("http://guides.pratikshah.website/download.php");
+    openUrlInBrowser("https://github.com/pratikjshah/sketch-cloud-library/archive/master.zip");
   } else {
     //globalContext.document.showMessage("Check later");
     setUpdateCheckDayOnTomorrow();
@@ -1390,7 +1519,19 @@ function init(context) {
   globalContext = context;
   pluginRoot = globalContext.scriptPath.stringByDeletingLastPathComponent().stringByDeletingLastPathComponent().stringByDeletingLastPathComponent();
   localDataPath = pluginRoot + "/Contents/Resources/user.config";
-  userConfig = readJSON(true, localDataPath);
+  userConfig = readLocalData(localDataPath);
+  var newTime = new Date();
+
+  if (userConfig.localUpdateTime < newTime.getTime()) {
+    trackEvent("checkForUpdate", "dailyCheckForUpdate", 1);
+    networkRequest(remoteManifestUrl, manageDailyUpdateCheck);
+  }
+  /*var remoteManifest = getRemoteJson(remoteManifestUrl);
+  if (userConfig.localVersion != remoteManifest.version) {
+  showMsg(userConfig.name + ": "+ userConfig.localVersion + " is out of date! Please check for updates.");
+  }
+  setUpdateCheckDayOnTomorrow();*/
+
 }
 function showMsg(msg) {
   globalContext.document.showMessage(msg);
@@ -1398,17 +1539,6 @@ function showMsg(msg) {
 function openUrlInBrowser(url) {
   NSWorkspace.sharedWorkspace().openURL(NSURL.URLWithString(url));
   trackEvent("openUrlInBrowser", url, 1);
-}
-function readJSON(isLocal, path) {
-  var data;
-
-  if (isLocal) {
-    data = readLocalData(path);
-  } else {
-    data = readRemoteData(path);
-  }
-
-  return data;
 }
 function saveLocalData(data, path) {
   /*var string = [NSString stringWithFormat: "%@", JSON.stringify(data)];
@@ -1425,84 +1555,29 @@ function readLocalData(path) {
     return data;
   }
 }
-function readRemoteData(path) {
-  var result = null;
-  result = networkRequest(["" + path]);
-  return result;
-}
-function tryParseJSON(jsonString) {
-  try {
-    var o = JSON.parse(jsonString); // Handle non-exception-throwing cases:
-    // Neither JSON.parse(false) or JSON.parse(1234) throw errors, hence the type-checking,
-    // but... JSON.parse(null) returns 'null', and typeof null === "object",
-    // so we must check for that, too.
-
-    if (o && _typeof(o) === "object" && o !== null) {
-      return o;
+function networkRequest(url, callBackFun) {
+  console.log("in networkRequest: \n" + url + " \n " + callBackFun);
+  return fetch(url).then(function (response) {
+    if (!response.ok) {
+      throw Error(response.statusText);
     }
-  } catch (e) {}
 
-  return false;
-}
-function networkRequest(url) {
-  /*var task = NSTask.alloc().init();
-  task.setLaunchPath("/usr/bin/curl");
-  task.setArguments(args);
-  var outputPipe = [NSPipe pipe];
-  [task setStandardOutput:outputPipe];
-  task.launch();
-  var responseData = [[outputPipe fileHandleForReading] readDataToEndOfFile];
-  var garesponse = "<47494638 39610100 010080ff 00ffffff 0000002c 00000000 01000100 00020244 01003b>";
-  if (responseData == garesponse) {
-      return true;
-  } else {
-    var responseString = [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding]];
-    var parsed = tryParseJSON(responseString);
-    if(!parsed) {
-      throw "Error communicating with server"
-    }
-    return parsed;
-  }*/
-
-  /*fetch(url)
-  .then(function(response) {
-    console.log("response: " + response);
+    return response;
+  }).then(function (response) {
     return response.json();
-  })
-  .then(function(myJson) {
-    //console.log("response JSON");
-    console.log(JSON.stringify(myJson));
-    return myJson;
-  })
-  .catch(function(e) {
-  	console.log(e);
-  });*/
+  }).then(function (result) {
+    console.log('Response Params: \n url: ' + url + " \n callBackFun: " + callBackFun);
+    console.log(result);
 
-  /*fetch(url)
-    .then(response => response.text())
-    .then(text => console.log(text))
-    .catch(e => console.error(e));*/
-  fetch(pathToResource) // 1
-  .then(validateResponse) // 2
-  .then(readResponseAsJSON) // 3
-  .then(logResult) // 4
-  .catch(logError);
-}
-function logResult(result) {
-  console.log(result);
-}
-function logError(error) {
-  console.log('Looks like there was a problem: \n', error);
-}
-function validateResponse(response) {
-  if (!response.ok) {
-    throw Error(response.statusText);
-  }
+    if (callBackFun !== 'undefined') {
+      callBackFun(result);
+    }
 
-  return response;
-}
-function readResponseAsJSON(response) {
-  return response.json();
+    return result;
+  }).catch(function (error) {
+    console.log('Params: \n url: ' + url + " \n callBackFun: " + callBackFun);
+    console.log('Looks like there was a problem: \n', error);
+  });
 }
 function trackEvent(action, label, value) {
   var kUUIDKey = 'google.analytics.uuid';
@@ -1518,9 +1593,9 @@ function trackEvent(action, label, value) {
   var ds = "Sketch-" + NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString");
   var baseURL = "https://www.google-analytics.com/debug/collect?v=1&ds=" + ds + "&t=event&tid=" + tid + "&cid=" + cid;
   baseURL = "https://www.google-analytics.com/collect?v=1&ds=" + ds + "&t=event&tid=" + tid + "&cid=" + cid;
-  var version = configData.localVersion;
-  var trackingURL = baseURL + "&ec=PSGuides-" + version + "&ea=" + action + "&el=" + label + "&ev=" + value;
-  getRemoteJson(trackingURL);
+  var version = userConfig.localVersion;
+  var trackingURL = baseURL + "&ec=SketchCloudLibrary-" + version + "&ea=" + action + "&el=" + label + "&ev=" + value;
+  networkRequest(trackingURL);
 }
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/sketch-polyfill-fetch/lib/index.js */ "./node_modules/sketch-polyfill-fetch/lib/index.js")))
 
