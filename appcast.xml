@@ -7,6 +7,19 @@
         <language>en</language>
 
         <item>
+            <title>v1.1.1</title>
+            <description>
+                <![CDATA[
+                  <h2>Added Daily Update Check</h2>
+                ]]>
+            </description>
+            <pubDate>Thu, 8 Feb 2019 21:54:24 GMT</pubDate>
+            <enclosure
+                url="https://github.com/pratikjshah/walmart-design-system/archive/master.zip"
+                sparkle:version="1.1.1"
+                type="application/octet-stream"/>
+        </item>
+        <item>
             <title>v1.0.1</title>
             <description>
                 <![CDATA[
