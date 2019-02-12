@@ -7,6 +7,19 @@
         <language>en</language>
 
         <item>
+            <title>v1.2.1</title>
+            <description>
+                <![CDATA[
+                  <h2>Added support for Sketch 53</h2>
+                ]]>
+            </description>
+            <pubDate>Tue, 12 Feb 2019 12:54:24 GMT</pubDate>
+            <enclosure
+                url="https://github.com/pratikjshah/sketch-cloud-library/archive/v1.2.1.zip"
+                sparkle:version="1.2.1"
+                type="application/octet-stream"/>
+        </item>
+        <item>
             <title>v1.1.1</title>
             <description>
                 <![CDATA[
