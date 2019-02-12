@@ -1417,10 +1417,10 @@ function loadPalette(palette) {
     }
   } else {
     showMsg("No 🌈Colors found! Please report the issue.");
-  } //var assets = app.globalAssets();
+  }
 
+  var assets = MSPersistentAssetCollection.sharedGlobalAssets(); //var assets = doc.documentData().assets();
 
-  var assets = doc.documentData().assets();
   assets.setColors([]);
   if (colors.length > 0) assets.addColors(colors);
   doc.inspectorController().closeAnyColorPopover();
