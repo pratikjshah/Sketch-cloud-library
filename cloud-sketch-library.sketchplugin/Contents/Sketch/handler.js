@@ -1371,10 +1371,10 @@ function addOrEnableLibrary(librariesToAdd) {
   for (var i = 0; i < librariesToAdd.length; i++) {
     if (enableLibraryIfAlreadyAdded(librariesToAdd[i].fileName)) {
       showMsg("🤘Yo🤘 " + librariesToAdd[i].displayName + " is already added!");
-      trackEvent("addLibrary", "enabledAddedLibrary", 1);
+      trackEvent("enabledAddedLibrary", librariesToAdd[i].displayName, 1);
     } else {
       addNewLibrary(librariesToAdd[i].url);
-      trackEvent("addLibrary", "addNewLibrary", 1);
+      trackEvent("addNewLibrary", librariesToAdd[i].displayName, 1);
       showMsg("⬇️ Downloading " + librariesToAdd[i].displayName + " ..");
     }
   }
@@ -1543,6 +1543,7 @@ function openUrlInBrowser(url) {
 function saveLocalData(data, path) {
   /*var string = [NSString stringWithFormat: "%@", JSON.stringify(data)];
   [string writeToFile: path atomically: true encoding: NSUTF8StringEncoding error: nil];*/
+  data = JSON.stringify(data);
   var text = NSString.stringWithFormat("%@", data);
   var file = NSString.stringWithFormat("%@", path);
   return text.writeToFile_atomically_encoding_error(file, true, NSUTF8StringEncoding, null);
