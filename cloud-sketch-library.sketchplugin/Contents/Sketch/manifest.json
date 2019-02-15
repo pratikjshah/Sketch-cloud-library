@@ -8,7 +8,7 @@
   "updateURL": "https://github.com/pratikjshah/sketch-cloud-library/archive/master.zip",
   "downloadURL": "https://github.com/pratikjshah/sketch-cloud-library/archive/master.zip",
   "homepage": "http://sketch-cloud-library.pratikshah.website/",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "identifier": "website.pratikshah.sketch-cloud-library",
   "compatibleVersion": "52",
   "bundleVersion": "1",

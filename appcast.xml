@@ -7,7 +7,7 @@
         <language>en</language>
 
         <item>
-            <title>v1.2.3</title>
+            <title>v1.2.4</title>
             <description>
                 <![CDATA[
                   <h2>Added support for Sketch 53</h2>
@@ -15,8 +15,8 @@
             </description>
             <pubDate>Fri, 15 Feb 2019 10:14:24 GMT</pubDate>
             <enclosure
-                url="https://github.com/pratikjshah/sketch-cloud-library/archive/v1.2.3.zip"
-                sparkle:version="1.2.3"
+                url="https://github.com/pratikjshah/sketch-cloud-library/archive/v1.2.4.zip"
+                sparkle:version="1.2.4"
                 type="application/octet-stream"/>
         </item>
         <item>
