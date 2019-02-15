@@ -1413,7 +1413,9 @@ function loadPalette(palette) {
 
   if (colorPalette.length > 0) {
     for (var i = 0; i < colorPalette.length; i++) {
-      colors.push(MSColor.colorWithRed_green_blue_alpha(colorPalette[i].red, colorPalette[i].green, colorPalette[i].blue, colorPalette[i].alpha));
+      var colorName = colorPalette[i].name ? colorPalette[i].name : null;
+      var mscolor = MSColor.colorWithRed_green_blue_alpha(colorPalette[i].red, colorPalette[i].green, colorPalette[i].blue, colorPalette[i].alpha);
+      colors.push(MSColorAsset.alloc().initWithAsset_name(mscolor, colorName));
     }
   } else {
     showMsg("No 🌈Colors found! Please report the issue.");
@@ -1421,8 +1423,8 @@ function loadPalette(palette) {
 
   var assets = MSPersistentAssetCollection.sharedGlobalAssets(); //var assets = doc.documentData().assets();
 
-  assets.setColors([]);
-  if (colors.length > 0) assets.addColors(colors);
+  assets.setColorAssets([]);
+  if (colors.length > 0) assets.addColorAssets(colors);
   doc.inspectorController().closeAnyColorPopover();
   app.refreshCurrentDocument();
   trackEvent("addLibrary", "loadPalette", 1);
