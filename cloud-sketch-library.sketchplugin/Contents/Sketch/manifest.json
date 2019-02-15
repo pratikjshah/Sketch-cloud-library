@@ -8,7 +8,7 @@
   "updateURL": "https://github.com/pratikjshah/sketch-cloud-library/archive/master.zip",
   "downloadURL": "https://github.com/pratikjshah/sketch-cloud-library/archive/master.zip",
   "homepage": "http://sketch-cloud-library.pratikshah.website/",
-  "version": "1.2.1",
+  "version": "1.2.3",
   "identifier": "website.pratikshah.sketch-cloud-library",
   "compatibleVersion": "52",
   "bundleVersion": "1",
@@ -41,7 +41,7 @@
       "script": "handler.js",
       "handler": "checkLibraryUpdates",
       "shortcut": "",
-      "name": "Check Library Updates",
+      "name": "Force Check Library Updates",
       "identifier": "checkLibraryUpdates",
       "icon": ""
     },
