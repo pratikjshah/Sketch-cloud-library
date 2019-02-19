@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"  xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>GDP Icons Library</title>
+    <link>https://raw.githubusercontent.com/pratikjshah/sketch-cloud-library/master/gdp-rss/wm-gdp-icon-library.rss</link>
+    <description>GDP Icons Sketch Library - includes filled and two-toned styles</description>
+    <language>en</language>
+      <item>
+        <title>GDP Icons Library</title>
+        <sparkle:minimumSystemVersion>49</sparkle:minimumSystemVersion>
+        <pubDate>Tue, 19 Feb 2019 14:00:00 +0000</pubDate>
+        <enclosure url="https://github.com/pratikjshah/sketch-cloud-library/blob/master/gdp-rss/wm-gdp-icons-library.sketch" sparkle:version="15" length="1649133" type="application/octet-stream" />
+      </item>
+  </channel>
+</rss>
